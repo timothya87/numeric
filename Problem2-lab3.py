@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Written by Tim Atkinson 
-Problem 2 for lab 3
+Problem 2 a) and c) for lab 3
 
 Purpose: to show the conditional numbers for Matricies of size n.
          The solutions are graphed for both the original Differential

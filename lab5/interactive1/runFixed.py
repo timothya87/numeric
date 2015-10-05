@@ -8,10 +8,15 @@ from collections import namedtuple
 class Integ51(Integrator):
 
     def set_yinit(self):
-        uservars = namedtuple(
-            'uservars', 'albedo_white chi S0 L albedo_black R albedo_ground')
+        #
+        # read in 'albedo_white chi S0 L albedo_black R albedo_ground'
+        #
+        uservars = namedtuple('uservars', self.config['uservars'].keys())
         self.uservars = uservars(**self.config['uservars'])
-        initvars = namedtuple('initvars', 'whiteconc blackconc')
+        #
+        # read in 'whiteconc blackconc'
+        #
+        initvars = namedtuple('initvars', self.config['initvars'].keys())
         self.initvars = initvars(**self.config['initvars'])
         self.yinit = np.array(
             [self.initvars.whiteconc, self.initvars.blackconc])
@@ -49,9 +54,8 @@ if __name__ == "__main__":
     print('theSolver: debug: ', theSolver.yinit)
     timeVals, yVals, errorList = theSolver.timeloop5fixed()
 
-    thefig = plt.figure(1)
-    thefig.clf()
-    theAx = thefig.add_subplot(111)
+    plt.close('all')
+    thefig, theAx = plt.subplots(1,1)
     theLines = theAx.plot(timeVals, yVals)
     theLines[0].set_marker('+')
     theLines[1].set_linestyle('--')
@@ -62,9 +66,7 @@ if __name__ == "__main__":
     theAx.set_ylabel('fractional coverage')
     theAx.legend(theLines, ('white daisies', 'black daisies'), loc='best')
 
-    thefig = plt.figure(2)
-    thefig.clf()
-    theAx = thefig.add_subplot(111)
+    thefig, theAx = plt.subplots(1,1)
     theLines = theAx.plot(timeVals, errorList)
     theLines[0].set_marker('+')
     theLines[1].set_linestyle('--')

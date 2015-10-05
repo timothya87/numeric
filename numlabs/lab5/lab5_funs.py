@@ -48,10 +48,11 @@ class Integrator:
         with open(coeffFileName, 'rb') as f:
             config = yaml.load(f)
         self.config = config
-        timevars = namedtuple('timevars', 'dt tstart tend')
+        # read in dt tstart tend
+        timevars = namedtuple('timevars',config['timevars'].keys())
         self.timevars = timevars(**config['timevars'])
-        adaptvars = namedtuple('adaptvars', ('dtpassmin dtpassmax dtfailmin dtfailmax s '
-                                             'rtol atol maxsteps maxfail'))
+        # read in dtpassmin dtpassmax dtfailmin dtfailmax s rtol atol maxsteps maxfail
+        adaptvars = namedtuple('adaptvars', config['adaptvars'].keys())
         self.adaptvars = adaptvars(**config['adaptvars'])
         self.rkckConsts = rkck_init()
 

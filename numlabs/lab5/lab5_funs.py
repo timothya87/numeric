@@ -1,13 +1,13 @@
 import numpy as np
 import yaml
-from collections import namedtuple
+testfrom collections import namedtuple
 
 
 def rkck_init():
     # %
     # % initialize the Cash-Karp coefficients
     # % defined in the tableau in lab 4,
-    # % section 3.5
+    # % section "Embedded Runge Kutta"
     # %
     a = np.array([0.2, 0.3, 0.6, 1.0, 0.875])
   # c1 coefficients for the fifth order scheme
@@ -17,9 +17,12 @@ def rkck_init():
     c2 = np.array([2825.0 / 27648.0, 0.0, 18575.0 / 48384.0,
                    13525.0 / 55296.0, 277.0 / 14336.0, .25])
     b = np.empty([5, 5], 'float')
-  # the following line is ci* - ci in lab4, equation 3.12
+  # the following line is ci - ci* in lab4, \Delta_est equationl
+  # this is used to calculate \Delta_est = estError for the embededd
+  # Runge Kutta  \sum_^6 (c_i -c_i^*)
+  #
     c2 = c1 - c2
-  # this is the tableu given on lab4, page 7
+  # this sets b values for same tableu 
     b[0, 0] = 0.2
     b[1, 0] = 3.0 / 40.0
     b[1, 1] = 9.0 / 40.0
@@ -69,12 +72,10 @@ class Integrator:
 
         # initialize the Cash-Karp coefficients
         # defined in the tableau in lab 4,
-        # section 3.5
 
         a, c1, c2, b = self.rkckConsts
-        t = self.timevars
         i = self.initvars
-        # set up array to hold k values in lab4 (3.9)
+        # set up array to hold k values in lab4 
         derivArray = np.empty([6, self.nvars], 'float')
         ynext = np.zeros_like(yold)
         bsum = np.zeros_like(yold)
@@ -83,24 +84,29 @@ class Integrator:
         derivArray[0, :] = self.derivs5(yold, timeStep)[:]
 
         # calculate step
-        # c1=c_i in lab 4 (3.9), but c2=c_i - c^*_i
+        # c1=c_i in lab 4 notation, but c2=c_i - c^*_i
 
         y = yold
         for i in np.arange(5):
             bsum = 0.
             for j in np.arange(i + 1):
                 bsum = bsum + b[i, j] * derivArray[j, :]
-            # vectors k2 through k6 in lab4 equation 3.9
+            # vectors k2 through k6 in lab4 
 #           pdb.set_trace()
-            derivArray[
-                i + 1, :] = self.derivs5(y + deltaT * bsum, timeStep + a[i] * deltaT)[:]
-            # partial sum of error in lab4 (3.12)
+            derivArray[i + 1, :] = self.derivs5(y + deltaT * bsum, timeStep + a[i] * deltaT)[:]
+            # partial sum of error in lab4 \Delta_est
+            #
+            #  sum the error term
+            #
             estError = estError + c2[i] * derivArray[i, :]
             # print "estError: ",estError
+            #
+            # 5th order estimate y_{n+1}
+            #
             ynext = ynext + c1[i] * derivArray[i, :]
         # final fifth order anser
         y = y + deltaT * (ynext + c1[5] * derivArray[5, :])
-        # final error estimate
+        # final 4th order estimate estimate
         estError = deltaT * (estError + c2[5] * derivArray[5, :])
         # print "estError final: ",estError
         timeStep = timeStep + deltaT

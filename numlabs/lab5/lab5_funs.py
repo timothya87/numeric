@@ -1,6 +1,6 @@
 import numpy as np
 import yaml
-testfrom collections import namedtuple
+from collections import namedtuple
 
 
 def rkck_init():

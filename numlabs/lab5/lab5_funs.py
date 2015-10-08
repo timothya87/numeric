@@ -154,7 +154,7 @@ class Integrator:
                 # try a timestep, we may need to reverse this
                 #
                 ynew, yerror, timeStep = self.rkckODE5(yold, oldTime, olddt)
-                print("try a step: : ", ynew)
+                # print("try a step: : ", ynew)
                 #
                 # lab 5 section 4.2.3
                 # find the desired tolerance by multiplying the relative
@@ -171,8 +171,8 @@ class Integrator:
                 # lab5 equation 4.13, S
                 #
                 dtchange = a.s * (1.0 / errtest)**0.2
-                print("dtchange, errtest, timeStep: ",
-                      dtchange, errtest, timeStep, ynew, yerror)
+                # print("dtchange, errtest, timeStep: ",
+                #       dtchange, errtest, timeStep, ynew, yerror)
                 if (errtest > 1.0):
                     # estimated error is too big so
                     # reduce the timestep and retry

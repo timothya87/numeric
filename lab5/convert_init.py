@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from configparser import ConfigParser
 from collections import OrderedDict
 import yaml

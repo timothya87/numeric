@@ -1,4 +1,4 @@
-def jacobian_2(answer)
+def jacobian_2(answer):
     '''Gives the responses to the Jacobian quiz: what is the discretization using second order centered differences
     '''
 
@@ -16,7 +16,7 @@ def jacobian_2(answer)
     except KeyError:
         return "Acceptable answers are 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'Hint'"
 
-def jacobian_3(answer)
+def jacobian_3(answer):
     '''Gives the responses to the Jacobian quiz: what is the discretization using second order centered differences
     '''
 

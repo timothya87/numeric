@@ -1,0 +1,22 @@
+timevars:
+  dt: 0.01
+  tstart: 0.0
+  tend: 30
+uservars:
+  meanwu: 0.8
+  meanwv: 0.0
+  meanww: 0.1
+initvars:
+  initialx: 10.0
+  initialy: 10.0
+  initialz: 0.1
+adaptvars:
+  dtpassmin: 0.1
+  dtfailmax: 0.5
+  dtfailmin: 0.1
+  s: 0.9
+  rtol: 1.0e-05
+  atol: 1.0e-05
+  maxsteps: 2000.0
+  maxfail: 60.0
+  dtpassmax: 5.0
